@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-config
+data:
+  POSTGRES_PASSWORD: password
+  POSTGRES_DB: go_k8s
+  POSTGRES_USER: postgres
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  MIGRATION_URL: file://db/migrations
+  SERVER_ADDRESS: :5000
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-def-config
+data:
+  REDIS_ADDRESS: redis-0.redis.redis.svc.cluster.local:6379
+  REDIS_PASSWORD: password
+
+  # k create -f storage-class.yaml
+  # k create -f redis-pvs.yaml
+  # k create -f redis-cm.yaml
+  # k create -f redis-ss.yaml
+
+  # k delete pvc data-redis-0 -n redis && k delete pvc data-redis-1 -n redis 
